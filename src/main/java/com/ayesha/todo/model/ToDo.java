@@ -2,6 +2,9 @@ package com.ayesha.todo.model;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import jakarta.annotation.Nonnull;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,15 +19,20 @@ public class ToDo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name ="id")
+	@Nonnull
 	private Long id;
 
 	@Column(name ="title")
+	@Nonnull
 	private String title;
 
 	@Column(name ="date")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@Nonnull
 	private Date date;
 
 	@Column(name ="status")
+	@Nonnull
 	private String status;
 
 	public ToDo() {
