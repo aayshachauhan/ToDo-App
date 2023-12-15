@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -46,4 +47,21 @@ public class ToDoContoller {
 		return "redirect:/viewToDoList";
 	}
 
+	@GetMapping("/addToDoItem")
+	public String addToDoItem(Model model) {
+		model.addAttribute("todo", new ToDo());
+		
+		return "AddToDoItem";
+	}
+
+	@PostMapping("/saveToDoItem")
+	public String saveToDoItem(ToDo todo, RedirectAttributes redirectAttributes) {
+		if(todoService.saveOrUpdateToDoItem(todo)) {
+			redirectAttributes.addFlashAttribute("message", "Save Success");
+			return "redirect:/viewToDoList";
+		}
+		
+		redirectAttributes.addFlashAttribute("message", "Save Failure");
+		return "redirect:/addToDoItem";
+	}
 }
