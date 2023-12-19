@@ -64,4 +64,23 @@ public class ToDoContoller {
 		redirectAttributes.addFlashAttribute("message", "Save Failure");
 		return "redirect:/addToDoItem";
 	}
+	
+	@GetMapping("/editToDoItem/{id}")
+	public String editToDoItem(@PathVariable Long id, Model model) {
+		model.addAttribute("todo", todoService.getToDoItemById(id));
+		
+		return "EditToDoItem";
+	}
+
+	@PostMapping("/editSaveToDoItem")
+	public String editSaveToDoItem(ToDo todo, RedirectAttributes redirectAttributes) {
+		if(todoService.saveOrUpdateToDoItem(todo)) {
+			redirectAttributes.addFlashAttribute("message", "Edit Success");
+			return "redirect:/viewToDoList";
+		}
+		
+		redirectAttributes.addFlashAttribute("message", "Edit Failure");
+		return "redirect:/editToDoItem/" + todo.getId();	
+	}
+	
 }
