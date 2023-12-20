@@ -83,4 +83,14 @@ public class ToDoContoller {
 		return "redirect:/editToDoItem/" + todo.getId();	
 	}
 	
+	@GetMapping("/deleteToDoItem/{id}")
+	public String deleteToDoItem(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+		if (todoService.deleteToDoItem(id)) {
+			redirectAttributes.addFlashAttribute("message", "Delete Success");
+			return "redirect:/viewToDoList";
+		}
+		
+		redirectAttributes.addFlashAttribute("message", "Delete Failure");
+		return "redirect:/viewToDoList";
+	}
 }
